@@ -32,7 +32,7 @@ export const AddressInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <FormInput
         {...props}
-        placeholder={props.placeholder || 'juno1234567890abcdefghijklmnopqrstuvwxyz...'}
+        placeholder={props.placeholder || 'neutron1arsaayyj5tash86mwqudmcs2fd5jt5zg...'}
         ref={ref}
         type="text"
       />
@@ -67,6 +67,13 @@ export const TextInput = forwardRef<HTMLInputElement, FormInputProps>(
     return <FormInput {...props} ref={ref} type="text" />
   },
   //
+)
+
+export const FileInput = forwardRef<HTMLInputElement, FormInputProps>(
+    function FileInput(props, ref) {
+        return <FormInput {...props} ref={ref} type="file" />
+    },
+    //
 )
 
 export const UrlInput = forwardRef<HTMLInputElement, FormInputProps>(

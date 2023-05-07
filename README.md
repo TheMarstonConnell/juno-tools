@@ -25,7 +25,7 @@
 ```sh
 # clone repository
 git clone https://github.com/CosmosContracts/juno-tools.git
-cd juno-tools
+cd slate-nft
 
 # install dependencies
 yarn install

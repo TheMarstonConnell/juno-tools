@@ -1,6 +1,6 @@
 {
-  "name": "juno-tools",
-  "version": "1.4.2",
+  "name": "slate-nft",
+  "version": "1.0.0",
   "workspaces": [
     "packages/*"
   ],
@@ -64,7 +64,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "@juno-tools/eslint-config"
+      "@slate-nft/eslint-config"
     ],
     "ignorePatterns": [
       ".next",
@@ -82,6 +82,6 @@
       "eslint --fix"
     ]
   },
-  "prettier": "@juno-tools/prettier-config",
+  "prettier": "@slate-nft/prettier-config",
   "private": true
 }

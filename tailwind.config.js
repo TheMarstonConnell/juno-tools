@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        juno: { DEFAULT: '#CA706D' },
+        juno: { DEFAULT: '#08B4B2' },
         dark: { DEFAULT: '#06090B' },
         gray: { DEFAULT: '#F3F6F8' },
         'dark-gray': { DEFAULT: '#191D20' },
@@ -16,22 +16,22 @@ module.exports = {
 
         neutral: colors.neutral,
         plumbus: {
-          DEFAULT: '#F0827D',
-          light: '#FF9D9E',
-          matte: '#CA9991',
-          dark: '#6E5451',
-          10: '#FFF0ED',
-          20: '#FACBC8',
-          30: '#F5A7A2',
-          40: '#F0827D',
-          50: '#D9726F',
-          60: '#C26261',
-          70: '#AB5152',
-          80: '#944144',
-          90: '#7D3136',
-          100: '#662027',
-          110: '#4F1019',
-          120: '#38000B',
+          DEFAULT: '#08B4B2',
+          light: '#1dcfcc',
+          matte: '#94e3e2',
+          dark: '#038a88',
+          10: '#cdf7f7',
+          20: '#abebea',
+          30: '#94e3e2',
+          40: '#84dbda',
+          50: '#08B4B2',
+          60: '#069c9a',
+          70: '#038a88',
+          80: '#027371',
+          90: '#015958',
+          100: '#003d3d',
+          110: '#002424',
+          120: '#000a0a',
         },
         twitter: { DEFAULT: '#1DA1F2' },
       },
@@ -54,10 +54,10 @@ module.exports = {
     plugin(({ addUtilities }) => {
       addUtilities({
         '.juno-gradient-bg': {
-          background: `linear-gradient(63.38deg, rgba(29, 24, 24, 0.25) 45.06%, rgba(240, 130, 125, 0.25) 100.6%), #252020`,
+          background: `linear-gradient(63deg, rgba(0,61,61,0.4) 45%, rgba(8,180,178,0.4) 100%)`,
         },
         '.juno-gradient-brand': {
-          background: `linear-gradient(102.33deg, #F9BCB2 10.96%, #FFFFFF 93.51%)`,
+          background: `linear-gradient(90deg, rgba(0,61,61,1) 0%, rgba(8,180,178,1) 35%, rgba(205,247,247,1) 100%)`,
         },
       })
     }),

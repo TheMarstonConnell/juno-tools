@@ -24,6 +24,24 @@ export const useInputState = ({ defaultValue, ...args }: UseInputStateProps) => 
   }
 }
 
+export const useFileInputState = ({ defaultValue, ...args }: UseInputStateProps) => {
+  const [value, setValue] = useState<string>(() => defaultValue ?? '')
+  const [file, setFile] = useState<File>()
+
+  useEffect(() => {
+    if (defaultValue) setValue(defaultValue)
+  }, [defaultValue])
+  return {
+    value,
+    file,
+    onChange: (obj: string | ChangeEvent<HTMLInputElement | HTMLFormElement>) => {
+      setValue(typeof obj === 'string' ? obj : obj.target.value)
+      setFile(typeof obj === 'string' ? obj : obj.target.files[0])
+    },
+    ...args,
+  }
+}
+
 export interface UseNumberInputStateProps {
   id: string
   name: string

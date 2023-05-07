@@ -23,9 +23,7 @@ export const Layout = ({ children, metadata = {} }: LayoutProps) => {
       <DefaultAppSeo />
 
       {/* plumbus confetti */}
-      <div className="fixed inset-0 -z-10 pointer-events-none juno-gradient-bg">
-        <img alt="plumbus confetti" className="fixed top-0 right-0 h-[calc(100vh+180px)]" src="/confetti.svg" />
-      </div>
+      <div className="fixed inset-0 -z-10 pointer-events-none juno-gradient-bg"></div>
 
       {/* actual layout container */}
       <div className="hidden sm:flex">

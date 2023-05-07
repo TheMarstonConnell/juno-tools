@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { Anchor } from 'components/Anchor'
 import { useWallet } from 'contexts/wallet'
 import { useRouter } from 'next/router'
-import BrandText from 'public/brand/brand-text.svg'
 import { NETWORK } from 'utils/constants'
 import { footerLinks, links, socialsLinks } from 'utils/links'
 
@@ -10,13 +9,7 @@ import { SidebarLayout } from './SidebarLayout'
 import { WalletLoader } from './WalletLoader'
 
 const routes = [
-  { text: 'Airdrops', href: `/airdrops` },
-  { text: 'Upload Contract', href: `/contracts/upload` },
-  { text: 'CW1 Subkeys', href: `/contracts/cw1/subkeys` },
-  { text: 'CW20 Base', href: `/contracts/cw20/base` },
-  { text: 'CW721 Base', href: `/contracts/cw721/base` },
-  { text: 'Sign and Verify', href: `/sign-verify` },
-  { text: 'Token Faucet', href: `/request-tokens` },
+  { text: 'Studio', href: `/contracts/cw721/base` }
 ]
 
 export const Sidebar = () => {
@@ -27,7 +20,7 @@ export const Sidebar = () => {
     <SidebarLayout>
       {/* juno brand as home button */}
       <Anchor href="/" onContextMenu={(e) => [e.preventDefault(), router.push('/brand')]}>
-        <BrandText className="text-plumbus hover:text-plumbus-light transition" />
+          <h1 className='font-heading text-5xl font-bold text-plumbus hover:text-plumbus-light transition' >Slate</h1>
       </Anchor>
 
       {/* wallet button */}
@@ -84,10 +77,10 @@ export const Sidebar = () => {
 
       {/* footer attribution */}
       <div className="text-xs text-white/50">
-        JunoTools {process.env.APP_VERSION} <br />
+        Slate {process.env.APP_VERSION} <br />
         Made by{' '}
-        <Anchor className="text-plumbus hover:underline" href={links.deuslabs}>
-          deus labs
+        <Anchor className="text-plumbus hover:underline" href={links.jackalLabs}>
+          Jackal Labs
         </Anchor>
       </div>
 

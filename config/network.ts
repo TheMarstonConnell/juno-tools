@@ -20,16 +20,16 @@ export const mainnetConfig: AppConfig = {
 }
 
 export const uniTestnetConfig: AppConfig = {
-  chainId: 'uni-6',
-  chainName: 'Juno Testnet',
-  addressPrefix: 'juno',
-  rpcUrl: 'https://rpc.uni.juno.deuslabs.fi',
-  httpUrl: 'https://lcd.uni.juno.deuslabs.fi',
-  faucetUrl: 'https://faucet.uni.juno.deuslabs.fi',
-  feeToken: 'ujunox',
-  stakingToken: 'ujunox',
+  chainId: 'pion-1',
+  chainName: 'Neutron-Pion',
+  addressPrefix: 'neutron',
+  rpcUrl: 'https://rpc.pion.rs-testnet.polypore.xyz/',
+  httpUrl: 'https://rest.pion.rs-testnet.polypore.xyz/',
+  faucetUrl: 'nil',
+  feeToken: 'untrn',
+  stakingToken: 'untrn',
   coinMap: {
-    ujunox: { denom: 'JUNOX', fractionalDigits: 6 },
+    untrn: { denom: 'NTRN', fractionalDigits: 6 },
   },
   gasPrice: 0.025,
   fees: {

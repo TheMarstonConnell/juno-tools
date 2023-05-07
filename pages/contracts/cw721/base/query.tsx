@@ -19,6 +19,8 @@ import type { QueryType } from 'utils/contracts/cw721/base/query'
 import { dispatchQuery, QUERY_LIST } from 'utils/contracts/cw721/base/query'
 import { withMetadata } from 'utils/layout'
 import { links } from 'utils/links'
+import  Image from 'next/image'
+import {ImagePreview} from "../../../../components/ImagePreview";
 
 const CW1SubkeysQueryPage: NextPage = () => {
   const { cw721Base: contract } = useContracts()
@@ -27,8 +29,8 @@ const CW1SubkeysQueryPage: NextPage = () => {
   const contractState = useInputState({
     id: 'contract-address',
     name: 'contract-address',
-    title: 'CW721 contract Address',
-    subtitle: 'Address of the CW721 contract',
+    title: 'Contract Address',
+    subtitle: 'Address of the NFT contract',
   })
   const address = contractState.value
 
@@ -65,9 +67,9 @@ const CW1SubkeysQueryPage: NextPage = () => {
 
       const result = await dispatchQuery({
         ownerAddress,
-        tokenId,
+        tokenId: "0",
         messages,
-        type,
+        type: "nft_info",
       })
       return result
     },
@@ -95,43 +97,25 @@ const CW1SubkeysQueryPage: NextPage = () => {
 
   return (
     <section className="py-6 px-12 space-y-4">
-      <NextSeo title="Query CW721 Base Contract" />
+      <NextSeo title="Slate NFT Studio Viewer" />
       <ContractPageHeader
-        description="CW721 Base is a specification for non fungible tokens based on CosmWasm."
+        description="Create a 1:1 NFT in the Jackal NFT studio for neutron."
         link={links['Docs CW721 Base']}
-        title="CW721 Base Contract"
+        title="NFT Studio"
       />
       <LinkTabs activeIndex={1} data={cw721BaseLinkTabs} />
 
       <div className="grid grid-cols-2 p-4 space-x-8">
         <div className="space-y-8">
           <AddressInput {...contractState} />
-          <FormControl htmlId="contract-query-type" subtitle="Type of query to be dispatched" title="Query Type">
-            <select
-              className={clsx(
-                'bg-white/10 rounded border-2 border-white/20 form-select',
-                'placeholder:text-white/50',
-                'focus:ring focus:ring-plumbus-20',
-              )}
-              id="contract-query-type"
-              name="query-type"
-              onChange={(e) => setType(e.target.value as QueryType)}
-            >
-              {QUERY_LIST.map(({ id, name }) => (
-                <option key={`query-${id}`} value={id}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </FormControl>
+
           <Conditional test={addressVisible}>
             <AddressInput {...ownerState} />
           </Conditional>
-          <Conditional test={tokenVisible}>
-            <AddressInput {...tokenIdState} />
-          </Conditional>
+
         </div>
-        <JsonPreview content={address ? { type, response } : null} title="Query Response" />
+        <ImagePreview response={response} />
+        {/*<JsonPreview content={address ? { type, response } : null} title="Query Response" />*/}
       </div>
     </section>
   )

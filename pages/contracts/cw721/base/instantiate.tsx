@@ -3,8 +3,8 @@ import { Button } from 'components/Button'
 import { Conditional } from 'components/Conditional'
 import { ContractPageHeader } from 'components/ContractPageHeader'
 import { FormGroup } from 'components/FormGroup'
-import { TextInput } from 'components/forms/FormInput'
-import { useInputState } from 'components/forms/FormInput.hooks'
+import {FileInput, TextInput} from 'components/forms/FormInput'
+import {useFileInputState, useInputState} from 'components/forms/FormInput.hooks'
 import { JsonPreview } from 'components/JsonPreview'
 import { LinkTabs } from 'components/LinkTabs'
 import { cw721BaseLinkTabs } from 'components/LinkTabs.data'
@@ -20,31 +20,30 @@ import { useMutation } from 'react-query'
 import { CW721_BASE_CODE_ID } from 'utils/constants'
 import { withMetadata } from 'utils/layout'
 import { links } from 'utils/links'
+import {DispatchExecuteArgs, ExecuteType} from "../../../../utils/contracts/cw721/base/execute";
+import {parseJson} from "../../../../utils/json";
+import {useMemo} from "react";
 
 const CW721BaseInstantiatePage: NextPage = () => {
   const wallet = useWallet()
-  const contract = useContracts().cw1Subkeys
+    const { cw721Base: contract } = useContracts()
 
   const nameState = useInputState({
     id: 'name',
     name: 'name',
-    title: 'Name',
-    placeholder: 'My Awesome CW721 Contract',
+    title: 'Artwork Name',
+    placeholder: 'Empty Artwork',
   })
 
-  const symbolState = useInputState({
-    id: 'symbol',
-    name: 'symbol',
-    title: 'Symbol',
-    placeholder: 'AWSM',
-  })
 
-  const minterState = useInputState({
-    id: 'minter-address',
-    name: 'minterAddress',
-    title: 'Minter Address',
-    placeholder: 'juno1234567890abcdefghijklmnopqrstuvwxyz...',
-  })
+    const fileState = useFileInputState({
+        id: 'file',
+        name: 'file',
+        title: 'File',
+        placeholder: 'jklf1h2u0hqf8fqrap4dyndz...',
+    })
+
+
 
   const { data, isLoading, mutate } = useMutation(
     async (event: FormEvent): Promise<InstantiateResponse | null> => {
@@ -52,19 +51,56 @@ const CW721BaseInstantiatePage: NextPage = () => {
       if (!contract) {
         throw new Error('Smart contract connection failed')
       }
+
+        const formData = new FormData();
+        if (!fileState.file) {
+            throw new Error('File upload failed')
+        }
+        formData.append('file', fileState.file);
+
+        let j
+        try {
+            let uploadRes = await fetch(
+                'http://localhost:2929/upload',
+                {
+                    method: 'POST',
+                    body: formData,
+                }
+            )
+            j = await uploadRes.json()
+        } catch (e) {
+            throw new Error('File upload failed')
+        }
+
+
+
       const msg = {
         name: nameState.value,
-        symbol: symbolState.value,
-        minter: minterState.value,
+        symbol: nameState.value.replace(/[aeiou]/ig,'').replace(' ', '').substring(0, 4).toUpperCase(),
+        minter: wallet.address,
       }
-      return toast.promise(
-        contract.instantiate(CW721_BASE_CODE_ID, msg, 'JunoTools CW721 Base Contract', wallet.address),
-        {
-          loading: 'Instantiating contract...',
-          error: 'Instantiation failed!',
-          success: 'Instantiation success!',
-        },
-      )
+
+      let contractInfo = await contract.instantiate(CW721_BASE_CODE_ID, msg, 'Jackal 1:1 NFT', wallet.address)
+        let contractAddress = contractInfo.contractAddress
+
+        let messages = contract.messages()
+        if (!messages) {
+            throw new Error('cannot dispatch execute, messages is not defined')
+        }
+        let c = contract.use(contractAddress)
+        if (!c) {
+            throw new Error('cannot dispatch execute, contract is not defined')
+        }
+
+
+        let uri = {
+            image: j.fid
+        }
+
+
+        let mintInfo = await c.mint("0", contractAddress, JSON.stringify(uri))
+        console.log(mintInfo)
+      return contractInfo
     },
     {
       onError: (error) => {
@@ -77,33 +113,31 @@ const CW721BaseInstantiatePage: NextPage = () => {
 
   return (
     <form className="py-6 px-12 space-y-4" onSubmit={mutate}>
-      <NextSeo title="Instantiate CW721 Base Contract" />
+      <NextSeo title="Create NFT" />
       <ContractPageHeader
-        description="CW721 Base is a specification for non fungible tokens based on CosmWasm."
-        link={links['Docs CW721 Base']}
-        title="CW721 Base Contract"
+        description="Create a 1:1 NFT in the Jackal NFT studio for neutron."
+        link={""}
+        title="NFT Studio"
       />
       <LinkTabs activeIndex={0} data={cw721BaseLinkTabs} />
 
       <Conditional test={Boolean(data)}>
         <Alert type="info">
-          <b>Instantiate success!</b> Here is the transaction result containing the contract address and the transaction
-          hash.
+          <b>Success!</b> Here is your NFT's contract address.
         </Alert>
-        <JsonPreview content={data} title="Transaction Result" />
+        <JsonPreview content={data?.contractAddress} title="NFT address" />
         <br />
       </Conditional>
 
-      <FormGroup subtitle="Basic information about your new contract" title="Contract Details">
+      <FormGroup subtitle="Details of your artwork." title="Artwork Details">
         <TextInput isRequired {...nameState} />
-        <TextInput isRequired {...symbolState} />
-        <TextInput isRequired {...minterState} />
+        <FileInput isRequired {...fileState} />
       </FormGroup>
 
       <div className="flex items-center p-4">
         <div className="flex-grow" />
-        <Button isLoading={isLoading} isWide rightIcon={<FaAsterisk />} type="submit">
-          Instantiate Contract
+        <Button isLoading={isLoading} isWide type="submit">
+          Create NFT
         </Button>
       </div>
     </form>

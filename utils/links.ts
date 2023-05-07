@@ -5,13 +5,13 @@ import { BLOCK_EXPLORER_URL } from './constants'
 
 export const links = {
   // main links
-  deuslabs: `https://deuslabs.fi`,
-  Discord: `https://discord.gg/Juno`,
-  Docs: `https://docs.juno.tools`,
-  GitHub: `https://github.com/CosmosContracts/juno-tools`,
-  Juno: `https://junonetwork.io`,
-  Telegram: `https://t.me/JunoNetwork`,
-  Twitter: `https://twitter.com/junotools`,
+  jackalLabs: `https://jackallabs.io`,
+  Discord: `https://discord.com/invite/5GKym3p6rj`,
+  Docs: `https://docs.jackalprotocol.com`,
+  GitHub: `https://github.com/JackalLabs`,
+  jackal: `https://jackalprotocol.com`,
+  Telegram: `https://t.me/+rtuZnbTlHaIzNjVh`,
+  Twitter: `https://twitter.com/Jackal_Labs`,
   Explorer: BLOCK_EXPLORER_URL,
 
   // reference links
@@ -22,10 +22,7 @@ export const links = {
 }
 
 export const footerLinks = [
-  { text: 'Block Explorer', href: links.Explorer },
-  { text: 'Documentation', href: links.Docs },
-  { text: 'Submit an issue', href: `${links.GitHub}/issues/new/choose` },
-  { text: 'Powered by Juno', href: links.Juno },
+  { text: 'Powered by Jackal', href: links.jackal },
 ]
 
 export const legacyNavbarLinks = [

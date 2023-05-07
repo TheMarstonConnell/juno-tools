@@ -1,5 +1,5 @@
 {
-  "name": "@juno-tools/prettier-config",
+  "name": "@slate-nft/prettier-config",
   "version": "0.0.0",
   "dependencies": {
     "prettier": "^2"
@@ -9,7 +9,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "@juno-tools/eslint-config"
+      "@slate-nft/eslint-config"
     ],
     "ignorePatterns": [
       "node_modules"
